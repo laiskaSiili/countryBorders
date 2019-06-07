@@ -1,6 +1,6 @@
 # Country Borders
 
-A barebone django app showcasing a specific usecase of pulling country borders from naturalearthdata and displaying it. 
+A barebone django app showcasing a specific usecase of pulling country borders from naturalearthdata and displaying them. 
 
 ## Installation
 - Install dependencies according using requirements.txt. On Windows using Miniconda is recommended due to dependencies such as geopandas and cartopy.
