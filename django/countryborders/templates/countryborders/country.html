@@ -1,0 +1,31 @@
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                {{form|crispy}}
+            </div>
+            <div class="col-md-8">
+                <img src="data:image/png;base64,{{image_base64}}" alt="country image" width="100%" height=auto />
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    var countryUrl = "{% url 'country' country='placeholder' %}"
+    document.getElementById('id_country').addEventListener('change', function (e) {
+        window.location.href = countryUrl.replace('placeholder', e.target.value);
+    });
+    </script>
+</body>
+</html>
