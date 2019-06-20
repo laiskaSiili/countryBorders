@@ -20,5 +20,4 @@ from countryborders.views import DrawCountry
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', DrawCountry.as_view(), ),
-    path('country/<str:country>/', DrawCountry.as_view(), name='country'),
 ]
