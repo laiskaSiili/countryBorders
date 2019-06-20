@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <!-- bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
 </head>
 <body>
     <div class="container">
@@ -25,14 +28,32 @@
             </div>
             <div class="col-md-8">
                 {% if image_base64 %}
+                <h4>Backend render in matplotli</h4>
                 <img src="data:image/png;base64,{{image_base64}}" alt="country image" width="100%" height=auto />
+
+                <h4>Frontend render in JS Leaflet</h4>
+                <div id="leaflet_map" style="height:400px;"></div>
                 {% else %}
                 <script>
                     document.getElementById('countryform').submit();
                 </script>
                 {% endif %}
+                {{geojson_countries}}
             </div>
         </div>
     </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+    <!-- leaflet logic -->
+    <script>
+        var map = L.map('leaflet_map').setView([0, 0], 1);
+         L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+            maxZoom: 20,
+            subdomains:['mt0','mt1','mt2','mt3']
+        }).addTo(map);
+        L.geoJSON({{geojson_countries|safe}}).addTo(map);
+        L.geoJSON({{geojson_cities|safe}}).addTo(map);
+    </script>
 </body>
 </html>

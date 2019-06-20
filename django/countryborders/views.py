@@ -13,6 +13,9 @@ from io import BytesIO
 import urllib, base64
 
 
+from shapely.geometry import mapping
+
+
 class DrawCountry(View):
 
     NUM_CITIES = 5
@@ -79,5 +82,42 @@ class DrawCountry(View):
 
             ctx['image_base64'] = image_base64
 
+            # LEAFLET GEOJSON DATAPREPARATION
+            ctx['geojson_cities'] =  geojson_from_point_geometry(country_cities_top5)
+            from shapely.ops import cascaded_union
+            ctx['geojson_countries'] =  geojson_from_polygon_geometry(country)
+
         ctx['form'] = form
         return render(request, 'countryborders/country.html', ctx)
+
+
+def geojson_from_point_geometry(df):
+
+    geojson = []
+    for index, row in df.iterrows():
+        geojson.append({
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                row.geometry.x,
+                row.geometry.y
+                ]
+            }
+        })
+
+    return geojson
+
+def geojson_from_polygon_geometry(df):
+
+    geojson = []
+    for index, row in df.iterrows():
+        geojson.append({
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [ mapping(row.geometry) ]
+            }
+        })
+
+    return geojson
