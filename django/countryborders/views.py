@@ -47,8 +47,6 @@ class DrawCountry(View):
                 try:
                     max_area = 0
                     for multipoly in country.geometry:
-                        print('----')
-                        print(len(multipoly))
                         for poly in multipoly:
                             if poly.area > max_area:
                                 largest_poly = poly
