@@ -10,7 +10,7 @@ cycler==0.10.0
 decorator==4.4.0
 defusedxml==0.6.0
 descartes==1.1.0
-Django==2.2.3
+Django==2.2.24
 django-crispy-forms==1.7.2
 entrypoints==0.3
 Fiona==1.8.6
